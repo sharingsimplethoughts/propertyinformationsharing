@@ -1,0 +1,9 @@
+<h2>Buy for {{amount}}</h2>
+<form action="{% url 'payments:sign_up_charge' %}" method="post">
+  {% csrf_token %}
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="{{ key }}"
+          data-description="Sign Up Charge"
+          data-amount="{{amount}}"
+          data-locale="auto"></script>
+</form>

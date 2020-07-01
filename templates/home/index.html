@@ -1,0 +1,97 @@
+{% include 'base/header.html' %}
+
+  <div class="dashboardPage"></div>
+    <div class="layout-content">
+      <div class="layout-content-body">
+        <div class="row margin-bottom-15">
+          <div class="col-md-6">
+            <div class="main-header">
+                <h4>Dashboard</h4>
+            </div>
+          </div>
+<!--          <div class="col-md-6">-->
+<!--            <div class="row">-->
+<!--              <div class="col-sm-6">-->
+<!--                  <select class="form-control" name="status">-->
+<!--                    <option value="1">Select Duration</option>-->
+<!--                    <option value="0">Today</option>-->
+<!--                    <option value="2">This Week</option>-->
+<!--                    <option value="2">This Month</option>-->
+<!--                    <option value="2">Previous Month</option>-->
+<!--                    <option value="2">Previous Week</option>-->
+<!--                  </select>-->
+<!--              </div>-->
+<!--              <div class="col-sm-6">-->
+<!--                <select class="form-control" name="status">-->
+<!--                  <option value="1">Select Country</option>-->
+<!--                  <option value="0">India</option>-->
+<!--                  <option value="2">US</option>-->
+<!--                  <option value="3">USA</option>-->
+<!--                </select>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+
+          <div class="row gutter-xs height-box margin-bottom-15">
+                <div class="col-md-4 col-lg-4 full-height">
+                  <div class="card dashboard-box">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div class="media-middle media-left">
+                            <span class="bg-primary circle sq-48">
+                              <span class="icon icon-user"></span>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-sm-8">
+                          <p>Total Guest Users</p>
+                          <h3 class="media-heading">{{total_guest_users}}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4  full-height">
+                  <div class="card dashboard-box">
+                    <div class="card-body">
+                      <div class="row gutter-xs">
+                        <div class="col-sm-4">
+                          <div class="media-middle media-left">
+                            <span class="bg-primary circle sq-48">
+                              <span class="icon icon-user"></span>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-sm-8">
+                          <p>Total Registered Users</p>
+                          <h3 class="media-heading">{{total_registered_users}}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4  full-height">
+                  <div class="card dashboard-box">
+                    <div class="card-body">
+                        <div class="row gutter-xs">
+                          <div class="col-sm-4 text-center">
+                            <div class="media-middle media-left">
+                              <span class="bg-primary circle sq-48">
+                                <span class="icon icon-user"></span>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="col-sm-8">
+                            <p>Total Posts</p>
+                            <h3 class="media-heading">{{total_posts}}</h3>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+        </div>
+</div>
+{% include 'base/footer.html' %}

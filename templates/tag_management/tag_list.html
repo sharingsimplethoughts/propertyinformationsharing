@@ -1,0 +1,367 @@
+
+{% include 'base/header.html' %}
+
+  <div class="tagPage">
+    <div class="layout-content">
+        <div class="layout-content-body">
+            <div class="row margin-bottom-15">
+                <div class="col-md-10">
+                    <div class="title-bar">
+                        <h1 class="title-bar-title">
+                            <span class="d-ib">Tag Management</span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <form method = "GET" id= filter_date action="/admin_panel/tag_management">
+                        {% csrf_token %}
+                    <div class="form-group">
+                      <label>Added by</label>
+                        <select class="form-control" name="sort_by" id="sort_by" onchange="this.form.submit()"
+                                id ="sort_by">
+                            <option value="2">all</option>
+                            <option value="0">Admin</option>
+                            <option value="1">Users</option>
+                        </select>
+                    </div>
+                    </form>
+                </div>
+            </div>
+             <div class="row margin-bottom-15">
+              <div class="col-md-12">
+                <div class="add-tag">
+                  <button class="btn btn-danger" type="button" data-toggle="modal"
+                  onclick="addTagDialog()">Add Tags</button>
+                </div>
+              </div>
+             </div>
+        <div class="row gutter-xs">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <table id="demo-datatables-5" class="table table-striped table-bordered table-nowrap dataTable" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th width="6%">S.No </th>
+                                    <th>Tag</th>
+                                    <th>Added By</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             {% for tag in tag_list %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{tag.tag}}</td>
+                                    {% if tag.created_by.is_superuser %}
+                                    <td>admin</td>
+                                    {% else %}
+                                    <td>{{tag.created_by.first_name}} {{tag.created_by.last_name}}</td>
+                                    {% endif %}
+                                    <td>{{tag.created_on|date:"d M Y , g:i a"}}</td>
+                                    <td>
+
+                                    <button class="btn btn-primary btn-sm btn-labeled" type="button" id="{{tag.id}}" name = "{{tag.tag}}" onclick="editTag(this.id, this.name)" data-toggle="modal">
+                                        <span class="btn-label">
+                                        <span class="icon fa fa-pencil icon-fw icon-lg f-16"></span>
+                                        </span>
+                                        Edit
+                                    </button>
+
+                                    <button class="btn btn-primary btn-sm btn-labeled" id="{{tag.id}}" onclick="deleteTag(this.id)"  type="button" data-toggle="modal" data-target="#deleteTag">
+                                        <span class="btn-label">
+                                        <span class="icon fa fa-trash icon-fw icon-lg f-16"></span>
+                                        </span>
+                                        Delete
+                                    </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+{% include 'base/footer.html' %}
+
+<div id="addTag" tabindex="-1" role="dialog" class="modal fade">
+       <div class="modal-dialog modal-sm">
+       <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <button type="button" class="close tag-times" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Tag</h4>
+        </div>
+           <div class="modal-body">
+           <div class="form-group">
+               <label>Tag Name</label>
+               <input type="" name="" id="add_tag" class="form-control">
+               <input type="hidden" name="" id="add_tag_id" class="form-control">
+               <span id="error_msg" style="color: red"></span>
+               <div class="m-t-lg text-center">
+               <button class="btn btn-success" onclick="saveTag()" type="button">Save</button>
+               </div>
+           </div>
+           </div>
+       </div>
+       </div>
+   </div>
+
+
+<div id="editTag" tabindex="-1" role="dialog" class="modal fade">
+       <div class="modal-dialog modal-sm">
+       <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <button type="button" class="close tag-times" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Tag</h4>
+        </div>
+           <div class="modal-body">
+           <div class="form-group">
+               <label>Tag Name</label>
+               <input type="" name="" id="edit_tag" class="form-control">
+               <input type="hidden" name="" id="edit_tag_id" class="form-control">
+               <span id="edit_error_msg" style="color: red"></span>
+               <div class="m-t-lg text-center">
+               <button class="btn btn-success" onclick="editTagFunc()" type="button">Save</button>
+               </div>
+           </div>
+           </div>
+       </div>
+       </div>
+   </div>
+
+
+
+   <div id="deleteTag" tabindex="-1" role="dialog" class="modal fade">
+       <div class="modal-dialog modal-sm">
+       <div class="modal-content">
+           <div class="modal-body">
+           <div class="text-center">
+               <h4>Are you sure to Delete this Tag?</h4>
+               <div class="m-t-lg">
+               <button class="btn btn-success" data-dismiss="modal" type="button">Cancel</button>
+               <button class="btn btn-danger"  id ="deletetag_id" tagid="" onclick="deleteTagFunction()" data-dismiss="modal" type="button" data-toggle="modal">Delete</button>
+
+               </div>
+           </div>
+           </div>
+       </div>
+       </div>
+   </div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="Success">
+       <div class="modal-dialog modal-sm" data-dismiss="modal">
+           <div class="modal-content">
+               <div class="modal-body">
+                   <h4 class="text-center" id="success_msg"></h4>
+                   <div class="successful-icon text-center">
+                    <button class="btn btn-success" type="button" onclick="window.location.reload()">OK</button>
+                    </div>
+               </div>
+           </div>
+       </div>
+   </div>
+
+   <!-- Modal END-->
+
+
+<script>
+
+function addTagDialog(){
+    $('#add_tag_id').val('')
+    $('#add_tag').val('')
+    $('#addTag').modal('show');
+
+
+}
+
+
+function editTag(id, name){
+  
+  $('#edit_tag_id').val(id)
+  $('#edit_tag').val(name)
+  
+  $('#editTag').modal('show');
+
+
+}
+
+
+function saveTag(){
+  
+  id = $('#add_tag_id').val()
+  tag = $('#add_tag').val()
+  if (tag==""){
+      $('#error_msg').text('field is required')
+
+      setTimeout(function() {
+
+      $('#error_msg').text('')
+
+      }, 3000);
+      return false;
+
+      }
+    
+
+  console.log(id, tag)
+  $.ajax(
+    {
+        type:"POST",
+        url: "/api/admin_panel/add_edit_tag",
+        data:{'tag':tag},
+        headers: { "X-CSRFToken":"{{request.COOKIES.csrftoken}}" },
+      success: function( data )
+        {
+            $('#add_tag_id').val('')
+            $('#add_tag').val('')
+            $('#error_msg').text('')
+
+            $('#addTag').modal('hide');
+            console.log(data)
+            $('#success_msg').text(data.message)
+            $('#Success').modal('show');
+
+        },
+      statusCode: {
+        404: function(error) {
+            alert('404')
+        },
+        500: function(error) {
+            alert('500')
+        },
+        400: function(error) {
+          console.log(error)
+
+            $('#error_msg').text(error.responseJSON.message)
+
+            setTimeout(function() {
+
+              $('#error_msg').text('')
+
+            }, 3000);
+
+        },
+    }
+     })
+
+
+}
+
+
+function editTagFunc(){
+  
+
+  id = $('#edit_tag_id').val()
+  tag = $('#edit_tag').val()
+
+  if (tag==""){
+
+    $('#edit_error_msg').text('field is required')
+
+    setTimeout(function() {
+
+      $('#edit_error_msg').text('')
+
+    }, 3000);
+
+    return false;
+
+  }
+
+  console.log(id, tag)
+  $.ajax(
+    {
+        type:"POST",
+        url: "/api/admin_panel/add_edit_tag",
+        data:{'id':id,'tag':tag},
+        headers: { "X-CSRFToken":"{{request.COOKIES.csrftoken}}" },
+      success: function( data )
+        {
+            $('#edit_tag_id').val('')
+            $('#edit_tag').val('')
+            $('#edit_error_msg').text('')
+
+            $('#editTag').modal('hide');
+            console.log(data)
+            $('#success_msg').text(data.message)
+            $('#Success').modal('show');
+
+        },
+      statusCode: {
+        404: function(error) {
+            alert('404')
+        },
+        500: function(error) {
+            alert('500')
+        },
+        400: function(error) {
+          console.log(error)
+
+            $('#edit_error_msg').text(error.responseJSON.message)
+
+            setTimeout(function() {
+
+              $('#edit_error_msg').text('')
+
+            }, 3000);
+
+        },
+    }
+     })
+
+
+}
+
+
+
+if('{{sort_by}}'==''){
+  $('#sort_by').val("2");
+}else{
+  $('#sort_by').val("{{sort_by}}");
+
+}
+
+function deleteTag(clicked_id){
+      document.getElementById('deletetag_id').setAttribute('tagid',clicked_id)
+    };
+
+
+ function deleteTagFunction(){
+        var id  = document.getElementById('deletetag_id').getAttribute("tagid");
+        $.ajax(
+    {
+        type:"POST",
+        url: "/api/admin_panel/delete_tag/"+id,
+        headers: { "X-CSRFToken":"{{request.COOKIES.csrftoken}}" },
+      success: function( data )
+        {
+            $('#success_msg').text('Tag deleted successfully')
+            $('#Success').modal('show');
+        },
+      statusCode: {
+        404: function(response) {
+            alert('404')
+        },
+        500: function(response) {
+            alert('500')
+        },
+        400: function(response) {
+            alert('400')
+        },
+    }
+     })
+  };
+
+
+</script>

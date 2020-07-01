@@ -1,0 +1,106 @@
+{% load staticfiles %}
+
+{% include 'base/header.html' %}
+  <div class="settingPage">
+    <div class="layout-content">
+        <div class="layout-content-body">
+            <div class="row margin-bottom-15">
+                <div class="col-md-12">
+                    <div class="title-bar">
+                        <h1 class="title-bar-title">
+                            <span class="d-ib">Settings Management</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-bottom-15 terms-box">
+                <div class="col-md-3">
+                    <div class="terms">
+                        <h5>Terms and Conditions</h5>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="terms-btn">
+                      <a href="/admin_panel/settings_management/terms_and_condition/">
+                        <button class="btn btn-primary term-primary" type="button">View</button>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="terms-btn">
+                        <a href="/admin_panel/settings_management/edit/f1">
+                          <button class="btn btn-primary term-primary" type="button">Edit</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row margin-bottom-15 terms-box">
+                <div class="col-md-3">
+                    <div class="terms">
+                        <h5>Privacy Policy</h5>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="terms-btn">
+                      <a href="/admin_panel/settings_management/privacy_policy/">
+                        <button class="btn btn-primary term-primary" type="button" onclick="window.location.href='privacy-policy.php'">View</button>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="terms-btn">
+                        <a href="/admin_panel/settings_management/edit/f2">
+                          <button class="btn btn-primary term-primary" type="button" onclick="window.location.href='privacy-policy.php'">Edit</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row margin-bottom-15 terms-box">
+                <div class="col-md-3">
+                    <div class="terms">
+                        <h5>FAQ</h5>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="terms-btn">
+                      <a href="/admin_panel/settings_management/faq/">
+                        <button class="btn btn-primary term-primary" type="button" onclick="window.location.href='help-faq.php'">View</button>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="terms-btn">
+                        <a href="/admin_panel/settings_management/faq/edit">
+                          <button class="btn btn-primary term-primary" type="button" onclick="window.location.href='help-faq.php'">Edit</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row margin-bottom-15 terms-box">
+                <div class="col-md-3">
+                    <div class="terms">
+                        <h5>About Us</h5>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="terms-btn">
+                      <a href="/admin_panel/settings_management/about_us/">
+                        <button class="btn btn-primary term-primary" type="button">View</button>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="terms-btn">
+                        <a href="/admin_panel/settings_management/edit/f3">
+                          <button class="btn btn-primary term-primary" type="button">Edit</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+</div>
+{% include 'base/footer.html' %}

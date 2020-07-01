@@ -1,0 +1,341 @@
+
+{% include 'base/header.html' %}
+
+  <div class="reportPage">
+    <div class="layout-content">
+        <div class="layout-content-body">
+            <div class="row margin-bottom-15">
+                <div class="col-md-12">
+                    <div class="title-bar">
+                        <h1 class="title-bar-title">
+                            <span class="d-ib">Report Management</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-bottom-15">
+        <form method = "GET" action="/admin_panel/report_management" id="filter_date">
+
+
+            <!-- <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="" class="control-label">Start Date</label>
+                    <div class="input-group date">
+                        <input  autocomplete="off" class="form-control" id="startdate" type="text" name="start_date">
+                        <span class="input-group-btn">
+                        <button id="123" class="btn btn-primary date" type="button" disabled>
+                            <span class="icon fa fa-calendar"></span>
+                        </button>
+                        </span>
+                    </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="" class="control-label">End Date</label>
+                    <div class="input-group date">
+                    <input  autocomplete="off"  class="form-control" id="enddate" type="text" name="end_date">
+                    <span class="input-group-btn">
+                        <button id="124" class="btn btn-primary" type="button" disabled>
+                            <span class="icon fa fa-calendar"></span>
+                        </button>
+                    </span>
+                    </div>
+                </div>
+                </div> -->
+
+                <!-- <div class="col-md-1">
+
+                   <button style="width:40px;height: 34px ;margin-top:24px" class="btn btn-default btn-sm btn-labeled" id="filter-post" type="submit" data-toggle="modal" disabled="disabled">
+                            <span class="add-btn">
+                            <i class="fa fa-search"></i>
+                            </span>
+                          </button>
+                </div> -->
+                <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="sel1">Reported Type</label>
+                      <select class="form-control" id="post_type" onchange="this.form.submit()" name="post_type">
+
+                        <option value="2">Users</option>
+                        <option value="1">Projects</option>
+
+                      </select>
+                    </div>
+                </div>
+                <!-- <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="sel1">Project</label>
+                      <select class="form-control" id="sort_by_project" onchange="this.form.submit()" name="sort_by_project">
+                            <option value="0">All</option>
+                          {% for project in projects %}
+                        <option value="{{project.id}}">{{project.type}}</option>
+                            {% endfor %}
+
+                      </select>
+                    </div>
+                </div> -->
+                <!-- <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="sel1">Category</label>
+                      <select class="form-control" id="sort_by_category" onchange="this.form.submit()"  name="sort_by_category">
+                        <option value="0" >All</option>
+                          {% for category in categories %}
+                          <option value="{{category.id}}">{{category.category}}</option>
+                          {% endfor %}
+
+                      </select>
+                    </div>
+                </div> -->
+
+            <!-- <div class="col-md-1">
+                    <div class="form-group">
+                      <a href="/admin_panel/report_management" style="text-decoration: underline;font-weight:600;">Clear all</a>
+                    </div>
+                </div> -->
+         </form>
+        </div>
+        <div class="row gutter-xs">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <table id="demo-datatables-5" class="table table-striped table-bordered table-nowrap dataTable" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th width="6%">S.No </th>
+                                    <th>Reported User name</th>
+                                    <th>Reason</th>
+                                    <th>Reported By</th>
+                                    <!-- <th>Project Category</th> -->
+<!--                                    <th>Total Like</th>-->
+<!--                                    <th>Total Comment</th>-->
+                                    <th>Created</th>
+                                    <!-- <th>Reported</th> -->
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for user in reported_users %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{user.user.username}}</td>
+
+                                     <td><span class="p-txt">{{user.reason.reason}}</span></td>
+                                    <td>{{user.reported_by.username}}</td>
+                                    <!-- <td>{{post.project_category.category}}</td> -->
+<!--                                    <td>{{post.total_likes}}</td>-->
+<!--                                    <td>{{post.total_comments}}</td>-->
+                                    <td>{{user.created|date:"d M Y"}}</td>
+                                    <!-- <td>{{post.total_reported}} times</td> -->
+                                    <td>
+
+                                        {% if user.user.is_active %}
+
+                                    <button class="btn btn-success btn-sm btn-labeled" id="{{user.user.id}}" type="button" data-toggle="modal" onclick="blockUser(this.id)" data-target="#blockUser">
+                                        <span class="btn-label">
+                                           <span class="icon fa fa-ban icon-fw icon-lg f-16"></span>
+                                        </span>
+                                        Active
+                                    </button>
+                                        {% else %}
+
+                                        <button class="btn btn-danger btn-sm btn-labeled" id="{{user.user.id}}" type="button" data-toggle="modal" onclick="unblockUser(this.id)" data-target="#UnblockUser">
+                                        <span class="btn-label">
+                                           <span class="icon fa fa-ban icon-fw icon-lg f-16"></span>
+                                        </span>
+                                        Inactive
+                                    </button>
+                                        {% endif %}
+
+                                            <button class="btn btn-info btn-sm btn-labeled" onclick="window.location='report_detail/{{user.user.id}}/{{post_type}}'" type="button">
+                                            <span class="btn-label">
+                                            <span class="icon fa fa-eye icon-fw icon-lg f-16"></span>
+                                            </span>
+                                                 View
+                                             </button>
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+  {% include 'base/footer.html' %}
+
+
+
+  <div id="blockUser" tabindex="-1" role="dialog" class="modal fade">
+    <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-body">
+        <div class="text-center">
+            <h4>Are you sure to Block this User?</h4>
+            <div class="m-t-lg">
+            <button class="btn btn-danger" data-dismiss="modal" type="button">Cancel</button>
+            <button class="btn btn-success" userid=""  id="blockuser_id" data-dismiss="modal" onclick="blockUserFunction(this.id)" type="button" data-toggle="modal">Block</button>
+
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div id="UnblockUser" tabindex="-1" role="dialog" class="modal fade">
+    <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-body">
+        <div class="text-center">
+            <h4>Are you sure to Unblock this user?</h4>
+            <div class="m-t-lg">
+            <button class="btn btn-danger" data-dismiss="modal" type="button">Cancel</button>
+            <button class="btn btn-success" userid="" id="unblockuser_id" data-dismiss="modal" onclick="unblockUserFunction(this.id)" type="button" data-toggle="modal" >UnBlock</button>
+
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+<div id="showPostDetail" tabindex="-1" role="dialog" class="modal fade">
+    <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-body">
+        <div class="text-center">
+            <h4>Are?</h4>
+            <div class="m-t-lg">
+            <button class="btn btn-danger" data-dismiss="modal" type="button">Cancel</button>
+            <button class="btn btn-success" userid="blockuser_id" id="" data-dismiss="modal" onclick="blockUserFunction()" type="button" data-toggle="modal"></button>
+
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="Success">
+    <div class="modal-dialog modal-sm" data-dismiss="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 id="message" class="text-center">User has been Blocked Successfully</h4>
+                <div class="successful-icon text-center">
+                 <button class="btn btn-success" onclick="window.location.reload();" type="button">OK</button>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal END-->
+<script>
+
+function unblockUser(clicked_id){
+      document.getElementById('unblockuser_id').setAttribute('userid',clicked_id)
+      console.log(clicked_id)
+    };
+
+    function blockUser(clicked_id){
+      document.getElementById('blockuser_id').setAttribute('userid',clicked_id)
+      console.log(clicked_id)
+    };
+
+
+
+    function blockUserFunction(){
+        var id  = document.getElementById('blockuser_id').getAttribute("userid");
+
+        $.ajax(
+    {
+        type:"POST",
+        url: "/api/admin_panel/block_user/"+id,
+        headers: { "X-CSRFToken":"{{request.COOKIES.csrftoken}}" },
+      success: function( data )
+        {
+
+           $('#message').text(data.message)
+            $("#Success").modal('show')
+
+        },
+      statusCode: {
+        404: function(response) {
+            alert('404')
+        },
+        500: function(response) {
+            alert('500')
+        },
+        400: function(response) {
+            alert('400')
+        },
+    }
+     })
+  };
+
+      function unblockUserFunction(){
+        var id  = document.getElementById('unblockuser_id').getAttribute("userid");
+
+        $.ajax(
+    {
+        type:"POST",
+        url: "/api/admin_panel/block_user/"+id,
+        headers: { "X-CSRFToken":"{{request.COOKIES.csrftoken}}" },
+      success: function( data )
+        {
+            $('#message').text(data.message)
+            $("#Success").modal('show')
+
+
+        },
+      statusCode: {
+        404: function(response) {
+            alert('404')
+        },
+        500: function(response) {
+            alert('500')
+        },
+        400: function(response) {
+            alert('400')
+        },
+    }
+     })
+  };
+
+
+$('#user_type').val("{{user_type}}");
+
+
+$('#filter_date').change(function() {
+
+    if ($('#startdate').val() != '' && $('#enddate').val() != '' ){
+      $('#filter-post').prop('disabled', false);
+      }
+      else{
+        $('#filter-post').prop('disabled', true);
+      }
+
+})
+
+
+$('#startdate').val("{{start_date}}");
+$('#enddate').val("{{end_date}}");
+if ("{{start_date}}" && "{{end_date}}"){
+    $('#filter-post').prop('disabled', false);
+    $('#enddate').datepicker('setStartDate', "{{start_date}}");
+     $('#startdate').datepicker('setEndDate', "{{end_date}}");
+
+}
+</script>

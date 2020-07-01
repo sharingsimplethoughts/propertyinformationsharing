@@ -1,0 +1,151 @@
+{% include 'base/header.html' %}
+
+
+<style>
+
+
+</style>
+
+  <div class="accountPage">
+    <div class="layout-content">
+            <div class="layout-content-body">
+                    <div class="row margin-bottom-15">
+                        <div class="col-md-6">
+                            <div class="title-bar">
+                                <h1 class="title-bar-title">
+                                    <span class="d-ib">View User</span>
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="category-select">
+                                <button class="btn btn-primary" onclick="window.location='/admin_panel/report_management?post_type=2'">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row gutter-xs">
+                    <div class="col-xs-10">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>User Name</label>
+                                                <input type="text" class="form-control"  value="{{fetched_user.name}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Profession</label>
+                                                <input type="text" class="form-control"  value="{{fetched_user.profession.type}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Mobile Number</label>
+                                                <input type="text" class="form-control"  value="{{fetched_user.country_code}} {{fetched_user.mobile_number}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Colleague Company Name</label>
+                                                <input type="text" class="form-control"  value="{{fetched_user.colleague_company_id.name}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Profile Type</label>
+                                                <input type="text" class="form-control" value="{{fetched_user.profile_type}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Gender</label>
+                                                {% if fetched_user.gender == '1' %}
+                                                <input type="text" class="form-control" value="Male" placeholder="" readonly="">
+                                                {% else %}
+                                                <input type="text" class="form-control" value="Female" placeholder="" readonly="">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Is Mail Verify</label>
+                                                <input type="text" class="form-control" value="{{fetched_user.is_mail_verify}}" placeholder="" readonly="" >
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Is Number Verify</label>
+                                                <input type="text" class="form-control" value="{{fetched_user.is_num_verify}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>About</label>
+                                                <textarea class="form-control" placeholder="" rows="3" readonly="">{{fetched_user.about}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row  margin-bottom-15">
+                                        
+                                      <div class="col-md-2">
+
+                                          <img src="{{fetched_user.profile_image}}" class="img-responsive">
+
+                                      </div>
+                                        
+
+                                    </div>
+
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>User Status</label>
+                                                {% if fetched_user.is_active %}
+                                                <input  type ="text" style ="color:green;font-weight:500" value="Active" readonly class="form-control">
+                                                {% else %}
+                                                <input  type="text" style ="color:red;font-weight:500" value="Inactive" readonly class="form-control" >
+
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Account Type</label>
+                                                <input type="text" class="form-control" value="{{fetched_user.account_type}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+  {% include 'base/footer.html' %}
+

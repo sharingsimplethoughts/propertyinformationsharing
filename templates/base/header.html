@@ -1,0 +1,252 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PropInfoShare Admin</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/img/favicon.png' %}">
+  <link rel="manifest" href="manifest.json">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#2c3e50">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.min.css">
+  <!-- <link rel="stylesheet" href="assets/css/vendor.min.css"> -->
+  <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/elephant.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/application.min.css' %}">
+  <!-- <link rel="stylesheet" href="assets/css/profile.min.css"> -->
+  <!-- <link rel="stylesheet" href="assets/css/product.min.css"> -->
+  <!-- <link rel="stylesheet" href="assets/css/demo.min.css"> -->
+
+  <link rel="stylesheet" href="{% static 'assets/css/iEdit.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+
+ <!-- <link rel="stylesheet" href="assets/css/signup-2.min.css"> -->
+ <link rel="stylesheet" href="{% static 'assets/fonts/font-awesome/css/font-awesome.min.css' %}">
+
+  <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+</head>
+<body class="layout layout-header-fixed">
+<div class="layout-header">
+    <div class="navbar navbar-default">
+      <div class="navbar-header">
+        <a class="navbar-brand navbar-brand-center" href="/admin_panel/home/">
+          <img class="navbar-brand-logo" src="{% static 'assets/img/logo-1.png' %}" alt="Elephant">
+        </a>
+        <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse" data-target="#sidenav">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="bars">
+            <span class="bar-line bar-line-1 out"></span>
+            <span class="bar-line bar-line-2 out"></span>
+            <span class="bar-line bar-line-3 out"></span>
+          </span>
+          <span class="bars bars-x">
+            <span class="bar-line bar-line-4"></span>
+            <span class="bar-line bar-line-5"></span>
+          </span>
+        </button>
+        <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse" data-target="#navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="arrow-up"></span>
+          <span class="ellipsis ellipsis-vertical">
+                <img class="ellipsis-object" width="32" height="32" src="{% static 'assets/img/0180441436.jpg' %}" alt="Tedddfsdfsdfsdfy Wilson">
+          </span>
+        </button>
+      </div>
+      <div class="navbar-toggleable">
+        <nav id="navbar" class="navbar-collapse collapse">
+          <button class="sidenav-toggler hidden-xs" title="Collapse sidenav ( [ )" aria-expanded="true" type="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="bars">
+              <span class="bar-line bar-line-1 out"></span>
+              <span class="bar-line bar-line-2 out"></span>
+              <span class="bar-line bar-line-3 out"></span>
+              <span class="bar-line bar-line-4 in"></span>
+              <span class="bar-line bar-line-5 in"></span>
+              <span class="bar-line bar-line-6 in"></span>
+            </span>
+          </button>
+          <ul class="nav navbar-nav navbar-right">
+
+            <li class="dropdown">
+              <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
+                <span class="icon-with-child hidden-xs">
+                  <span class="icon icon-bell-o icon-lg" id="get_notification"></span>
+<!--                  <span class="badge badge-danger badge-above right">7</span>-->
+                </span>
+                <span class="visible-xs-block">
+                  <span class="icon icon-bell icon-lg icon-fw"></span>
+                  <span class="badge badge-danger pull-right">7</span>
+                  Notifications
+                </span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
+                <div class="dropdown-header">
+
+                  <h5 class="dropdown-heading">Recent Notifications</h5>
+                </div>
+                <div class="dropdown-body">
+                  <div class="list-group list-group-divided custom-scrollbar">
+                    <div class="list-group-item" id="notification_content">
+
+                    </div>
+                  </div>
+                </div>
+<!--                <div class="dropdown-footer">-->
+<!--                  <a class="dropdown-btn" href="#">See All</a>-->
+<!--                </div>-->
+              </div>
+            </li>
+            <li class="dropdown hidden-xs">
+              <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
+                {% if user.name %}
+                    <img class="ellipsis-object" width="32" height="32" src="{{user.profile_image.url}}" alt="No image">{{user.name}}
+                {% else %}
+                    <img class="rounded" width="36" height="36" src="{% static 'assets/img/0180441436.jpg' %}" alt="Teddy Wilson">Teddy Wilson
+                {% endif %}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li><a href="/admin_panel/profile/">Profile</a></li>
+                <li><a href="/admin_panel/settings_management/settings/">Settings</a></li>
+                <li><a href="/admin_panel/logout/">Sign out</a></li>
+              </ul>
+            </li>
+
+            <li class="visible-xs-block">
+              <a href="/admin_panel/profile/">
+                <span class="icon icon-user icon-lg icon-fw"></span>
+                Profile
+              </a>
+            </li>
+            <li class="visible-xs-block">
+              <a href="/admin_panel/logout/">
+                <span class="icon icon-power-off icon-lg icon-fw"></span>
+                Sign out
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+<div class="layout-main">
+  <div class="layout-sidebar">
+  <div class="layout-sidebar-backdrop"></div>
+  <div class="layout-sidebar-body">
+    <div class="custom-scrollbar">
+      <nav id="sidenav" class="sidenav-collapse collapse">
+        <ul class="sidenav">
+          <li class="sidenav-heading">Navigation</li>
+          <li class="sidenav-item dashboardPageNav">
+            <a href="/admin_panel/home/" aria-haspopup="true">
+              <span class="sidenav-icon icon icon-home"></span>
+              <span class="sidenav-label">Dashboard</span>
+            </a>
+          </li>
+         <li class="sidenav-item userPageNav">
+              <a href="/admin_panel/user_management" aria-haspopup="true">
+                <span class="sidenav-icon icon icon-users"></span>
+                <span class="sidenav-label">Account Management</span>
+              </a>
+          </li>
+
+
+          <li class="sidenav-item postPageNav">
+              <a href="/admin_panel/post_management" aria-haspopup="true">
+                <span class="sidenav-icon icon icon-th"></span>
+                <span class="sidenav-label">Post Management</span>
+              </a>
+          </li>
+
+          <li class="sidenav-item tagPageNav">
+              <a href="/admin_panel/tag_management" aria-haspopup="true">
+                <span class="sidenav-icon icon icon-th"></span>
+                <span class="sidenav-label">Tag Management</span>
+              </a>
+          </li>
+          <li class="sidenav-item has-subnav flagNav">
+              <a href="/admin_panel/flag_management" aria-haspopup="true">
+                <span class="sidenav-icon icon fa fa-flag"></span>
+                <span class="sidenav-label">Flag Management</span>
+              </a>
+              <ul class="sidenav-subnav collapse" aria-expanded="true">
+                <li class="accNav-a"><a href="#">Post</a></li>
+                <li class="accNav-b"><a href="#">Profile</a></li>
+                <li class="accNav-b"><a href="#">All</a></li>
+              </ul>
+          </li>
+          <li class="sidenav-item reportPageNav">
+              <a href="/admin_panel/report_management" aria-haspopup="true">
+                <span class="sidenav-icon fa fa-flag"></span>
+                <span class="sidenav-label">Report Management</span>
+              </a>
+          </li>
+          <li class="sidenav-item paymentPageNav">
+              <a href="/admin_panel/payment_management" aria-haspopup="true">
+                <span class="sidenav-icon fa fa-money"></span>
+                <span class="sidenav-label">Payment Management</span>
+              </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+function getAdminNotification(){
+$("#notification_content").empty()
+var data = {'notification_for_user': '1'}
+    $.ajax({
+        type:'GET',
+        url: '/api/v1/notification/generate_admin_notification',
+        headers: {
+        "X-CSRFToken":"{{request.COOKIES.csrftoken}}",
+        "Authorization":"{{request.COOKIES.JWT}}" },
+        dataType: 'json',
+        success:function(data, textStatus, xhr){
+            var notifications = data['data']
+            for(var i=0; i < notifications.length; i++){
+            notification_context = notifications[i].notification_context
+            $("#notification_content").append('<div class="notification">\
+                        <div class="notification-media">\
+                          <span class="icon icon-exclamation-triangle bg-warning rounded sq-40"></span>\
+                        </div>\
+                        <div class="notification-content">\
+                          <small class="notification-timestamp">'+ notifications[i].created_at +'</small>\
+                          <h5 class="notification-heading">'+ notification_context.title +'</h5>\
+                          <p class="notification-text">\
+                            <small class="truncate">'+ notification_context.body +'</small>\
+                          </p>\
+                        </div>\
+                      </div>');
+            }
+        },
+        error: function(data){
+            console.log("error");
+            var errs = Object.values(data.responseJSON)
+            for(var i=0; i < errs.length; i++){
+            var errors = errs[i][0];
+            }
+            console.log(errors);
+        }
+    });
+
+};
+
+$(document).ready(function(){
+  getAdminNotification();
+})
+
+$("#get_notification").click(function(){
+getAdminNotification();
+})
+</script>

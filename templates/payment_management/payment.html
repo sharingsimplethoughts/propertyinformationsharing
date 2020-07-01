@@ -1,0 +1,157 @@
+
+{% include 'base/header.html' %}
+
+  <div class="paymentPage">
+    <div class="layout-content">
+        <div class="layout-content-body">
+            <div class="row margin-bottom-15">
+                <div class="col-md-12">
+                    <div class="title-bar">
+                        <h1 class="title-bar-title">
+                            <span class="d-ib">Payment Management</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-bottom-15">
+        <form method = "GET" action="" id="filter_date">
+
+
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="" class="control-label">Start Date</label>
+                    <div class="input-group date">
+                        <input  autocomplete="off" class="form-control" id="startdate" type="text" name="start_date">
+                        <span class="input-group-btn">
+                        <button id="123" class="btn btn-primary date" type="button" disabled>
+                            <span class="icon fa fa-calendar"></span>
+                        </button>
+                        </span>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="" class="control-label">End Date</label>
+                    <div class="input-group date">
+                    <input  autocomplete="off"  class="form-control" id="enddate" type="text" name="end_date">
+                    <span class="input-group-btn">
+                        <button id="124" class="btn btn-primary" type="button" disabled>
+                            <span class="icon fa fa-calendar"></span>
+                        </button>
+                    </span>
+                    </div>
+                </div>
+                </div>
+
+                <div class="col-md-1">
+
+                   <button style="width:40px;height: 34px ;margin-top:24px" class="btn btn-default btn-sm btn-labeled" id="filter-post" type="submit" data-toggle="modal" disabled="disabled">
+                            <span class="add-btn">
+                            <i class="fa fa-search"></i>
+                            </span>
+                          </button>
+                </div>
+
+
+
+
+            <div class="col-md-1">
+                    <div class="form-group">
+                      <a href="/admin_panel/payment_management" style="text-decoration: underline;font-weight:600;">Clear all</a>
+                    </div>
+                </div>
+         </form>
+        </div>
+        <div class="row gutter-xs">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <table id="demo-datatables-5" class="table table-striped table-bordered table-nowrap dataTable" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th width="6%">S.No </th>
+                                    <th>Payment Id</th>
+                                    <th>Username</th>
+<!--                                    <th>Company name</th>-->
+                                    <th>Ph. number</th>
+                                    <th>Payment type</th>
+                                    <th>amount ($)</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for payment in payments %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+
+                                    <td>{{payment.payment_id}}</td>
+                                    <td>{{payment.user.username}}</td>
+<!--                                    <td>{{payment.user.company}}</td>-->
+                                    <td>{{payment.user.country_code}}-{{payment.user.mobile_number}}</td>
+
+                                    <td>{{payment.get_payment_type_display}}</td>
+
+                                    <td>{{payment.amount}}</td>
+                                    <td>{{payment.created |date:"d M Y"}}</td>
+                                    <td>
+
+                                    {% if payment.captured %}
+                                        <span style="color:green">Success</span><br>
+                                         <span>({{payment.status_message}})</span>
+
+                                    {% else %}
+                                        <span style="color:red">Failed</span><br>
+                                         <span>({{payment.status_message}})</span>
+
+                                    {% endif %}
+
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+  {% include 'base/footer.html' %}
+
+
+
+<script>
+
+$('#filter_date').change(function() {
+
+    if ($('#startdate').val() != '' && $('#enddate').val() != '' ){
+      $('#filter-post').prop('disabled', false);
+      }
+      else{
+        $('#filter-post').prop('disabled', true);
+      }
+
+})
+
+
+$('#startdate').val("{{start_date}}");
+$('#enddate').val("{{end_date}}");
+if ("{{start_date}}" && "{{end_date}}"){
+    $('#filter-post').prop('disabled', false);
+    $('#enddate').datepicker('setStartDate', "{{start_date}}");
+     $('#startdate').datepicker('setEndDate', "{{end_date}}");
+
+}
+</script>

@@ -1,0 +1,147 @@
+{% load staticfiles %}
+<div class="layout-footer">
+    <div class="layout-footer-body">
+        <small class="copyright">2019 &copy; PropInfoShare</small>
+    </div>
+</div>
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+  <!-- <script src="assets/js/vendor.min.js"></script> -->
+  <!-- <script src="assets/js/jquery-ui.min.js"></script> -->
+  <script src="{% static 'assets/js/elephant.min.js' %}"></script>
+  <script src="{% static 'assets/js/application.min.js' %}"></script>
+  <script src="{% static 'assets/js/owl.carousel.js' %}"></script>
+  <script src="{% static 'assets/js/datepicker.js' %}"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>
+  <script src="{% static 'assets/js/iEdit.js' %}"></script>
+  <!-- <script src="assets/js/profile.min.js"></script> -->
+  <!-- <script src="assets/js/demo.min.js"></script> -->
+
+
+    <script src="https://www.gstatic.com/firebasejs/6.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+
+
+<script>
+
+</script>
+
+  <script type="text/javascript">
+    $('document').ready(function(){
+    if ( $('.profilePage').length > 0 ) {
+    $('.sidenav-item').removeClass("active");
+    $('.profilePageNav').addClass("active");
+  }
+  if ( $('.dashboardPage').length  > 0 ) {
+    $('.sidenav-item').removeClass("active");
+    $('.dashboardPageNav').addClass("active");
+  }
+  if ( $('.accountPage').length ) {
+    $('.sidenav-item').removeClass("active");
+    $('.accountPageNav').addClass("active");
+  }
+  if( $('.postPage').length ) {
+    $('.sidenav-item').removeClass("active");
+    $('.postPageNav').addClass("active");
+  }
+  if( $('.postPage').length ) {
+    $('.sidenav-item').removeClass("active");
+    $('.postPageNav').addClass("active");
+  }
+  if( $('.tagPage').length ) {
+    $('.sidenav-item').removeClass("active");
+    $('.tagPageNav').addClass("active");
+  }
+  if( $('.flagPage').length ) {
+    $('.sidenav-item').removeClass("active");
+    $('.flagPageNav').addClass("active");
+  }
+  if( $('.reportPage').length ) {
+    $('.sidenav-item').removeClass("active");
+    $('.reportPageNav').addClass("active");
+  }
+  if( $('.paymentPage').length ) {
+    $('.sidenav-item').removeClass("active");
+    $('.paymentPageNav').addClass("active");
+  }
+  if( $('.userPage').length ) {
+    $('.sidenav-item').removeClass("active");
+    $('.userPageNav').addClass("active");
+  }
+
+
+    $('.sidenav-toggler').on('click', function(){
+      $(this).toggleClass('collapsed');
+      $('.sidenav-collapse .sidenav').toggleClass('sidenav-collapsed');
+      $('body').toggleClass('layout-sidebar-collapsed');
+      if($(this).hasClass('collapsed')){
+        $(this).attr('title', 'Expand sidenav')
+      }else{
+        $(this).attr('title', 'Collapse sidenav')
+      }
+    });
+  });
+  </script>
+
+  <script type="text/javascript">
+  $(document).ready(function(){
+   $("#logo-file").change(function(e){
+    var img = e.target.files[0];
+    if(!iEdit.open(img, true, function(res){
+     $("#result").attr("src", res);
+    })){
+      alert("Whoops! That is not an image!");
+    }
+   });
+
+   $(document).on("click",".add-facility .plus-btn",function() {
+    $('.add-facility .facility-box').append('\
+       <div class="col-md-6">\
+        <input id="" class="form-control" type="date">\
+        <span class="del">x</span>\
+       </div>');
+      $(".add-facility .del").on('click',function(){
+        $(this).parent('.col-md-6').remove();
+      });
+  });
+  $(document).on("change",".gal-file",function(e2) {
+    var img1 = e2.target.files[0];
+    if(!iEdit.open(img1, true, function(res1){
+      console.log(res1)
+      $(e2.target).closest('div').find(".gal-result").attr("src", res1);
+    })){
+      alert("Whoops! That is not an image!");
+    }
+  });
+  });
+</script>
+ <script>
+  $(document).ready(function(){
+      $("#startDate").datepicker({
+        opens: 'bottom',
+        autoclose: true
+      }).on('changeDate', function(selected){
+        var startDate = new Date(selected.date.valueOf());
+        $('#endDate').datepicker('setStartDate', startDate);
+      });
+
+      $("#endDate").datepicker({
+        opens: 'bottom',
+        autoclose: true
+      }).on('changeDate', function(selected){
+          var startDate = new Date(selected.date.valueOf());
+          $('#startDate').datepicker('setEndDate', startDate);
+      });
+
+      $('.date .btn').click(function(){
+        $(this).parents('.input-group-btn').prev('.datepicker').datepicker("show");
+      });
+    });
+
+  $('.dataTable').DataTable();
+ </script>
+
+</body>
+</html>

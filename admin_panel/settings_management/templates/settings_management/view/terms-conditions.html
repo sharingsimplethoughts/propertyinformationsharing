@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terms And Conditions</title>
+</head>
+
+<style>
+
+	.tmc{
+		font-size: 13px ;
+		background:#FFF;
+		color: #969696;
+		font-weight: 100;
+		font-family: Montserrat, "Open Sans", Helvetica, Arial, sans-serif;
+	}
+	p{
+		margin-top: 20px;
+	}
+  .something{
+    background-color: black;
+    color:white;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+		font-family: Montserrat, "Open Sans", Helvetica, Arial, sans-serif;
+  }
+</style>
+
+<body>
+  <!-- <div class="something">
+    Terms and Conditions
+  </div> -->
+	<div style="padding:22px" class="tmc">
+
+    {{tacond.content |safe }}
+
+	</div>
+
+</body>
+</html>

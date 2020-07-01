@@ -1,0 +1,340 @@
+
+{% include 'base/header.html' %}
+
+  <div class="reportPage">
+    <div class="layout-content">
+        <div class="layout-content-body">
+            <div class="row margin-bottom-15">
+                <div class="col-md-12">
+                    <div class="title-bar">
+                        <h1 class="title-bar-title">
+                            <span class="d-ib">Report Management</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-bottom-15">
+        <form method = "GET" action="/admin_panel/report_management" id="post_type">
+
+
+            <!-- <div class="col-sm-2"> -->
+                <!-- <div class="form-group">
+                    <label for="" class="control-label">Start Date</label>
+                    <div class="input-group date">
+                        <input  autocomplete="off" class="form-control" id="startdate" type="text" name="start_date">
+                        <span class="input-group-btn">
+                        <button id="123" class="btn btn-primary date" type="button" disabled>
+                            <span class="icon fa fa-calendar"></span>
+                        </button>
+                        </span>
+                    </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="col-sm-2">
+                <div class="form-group">
+                    <label for="" class="control-label">End Date</label>
+                    <div class="input-group date">
+                    <input  autocomplete="off"  class="form-control" id="enddate" type="text" name="end_date">
+                    <span class="input-group-btn">
+                        <button id="124" class="btn btn-primary" type="button" disabled>
+                            <span class="icon fa fa-calendar"></span>
+                        </button>
+                    </span>
+                    </div>
+                </div>
+                </div> -->
+
+                <!-- <div class="col-md-1">
+
+                   <button style="width:40px;height: 34px ;margin-top:24px" class="btn btn-default btn-sm btn-labeled" id="filter-post" type="submit" data-toggle="modal" disabled="disabled">
+                            <span class="add-btn">
+                            <i class="fa fa-search"></i>
+                            </span>
+                          </button>
+                </div> -->
+                <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="sel1">Reported Type</label>
+                      <select class="form-control" id="post_type" onchange="this.form.submit()" name="post_type">
+
+                        <option value="1">Projects</option>
+                        <option value="2">Users</option>
+
+                      </select>
+                    </div>
+                </div>
+                <!-- <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="sel1">Project</label>
+                      <select class="form-control" id="sort_by_project" onchange="this.form.submit()" name="sort_by_project">
+                            <option value="0">All</option>
+                          {% for project in projects %}
+                        <option value="{{project.id}}">{{project.type}}</option>
+                            {% endfor %}
+
+                      </select>
+                    </div>
+                </div> -->
+                <!-- <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="sel1">Category</label>
+                      <select class="form-control" id="sort_by_category" onchange="this.form.submit()"  name="sort_by_category">
+                        <option value="0" >All</option>
+                          {% for category in categories %}
+                          <option value="{{category.id}}">{{category.category}}</option>
+                          {% endfor %}
+
+                      </select>
+                    </div>
+                </div> -->
+
+            <!-- <div class="col-md-1">
+                    <div class="form-group">
+                      <a href="/admin_panel/report_management" style="text-decoration: underline;font-weight:600;">Clear all</a>
+                    </div>
+            </div> -->
+         </form>
+        <!-- </div> -->
+        <div class="row gutter-xs">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <table id="demo-datatables-5" class="table table-striped table-bordered table-nowrap dataTable" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th width="6%">S.No </th>
+                                    <th>Reported Post Name</th>
+                                    <th>Reason</th>
+                                    <th>Reported By</th>
+                                    <!-- <th>Project Category</th> -->
+                                   <!-- <th>Total Like</th>-->
+<!--                                    <th>Total Comment</th> -->
+                                    <th>Created</th>
+                                    <!-- <th>Created</th> -->
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for post in reported_posts %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{post.post.name}}</td>
+
+                                     <td><span class="p-txt">{{post.reason.reason}}</span></td>
+                                    <td>{{post.user.username}}</td>
+                                    <!-- <td>{{post.project_category.category}}</td> -->
+<!--                                    <td>{{post.total_likes}}</td>-->
+<!--                                    <td>{{post.total_comments}}</td>-->
+                                    <td>{{post.created|date:"d M Y"}}</td>
+                                    <!-- <td>{{post.total_reported}} times</td> -->
+                                    <td>
+                            
+                                        {% if post.post.is_active %}
+
+                                    <button class="btn btn-success btn-sm btn-labeled" id="{{post.post.id}}" type="button" data-toggle="modal" onclick="blockPost(this.id)" data-target="#blockPost">
+                                        <span class="btn-label">
+                                           <span class="icon fa fa-ban icon-fw icon-lg f-16"></span>
+                                        </span>
+                                        Block
+                                    </button>
+                                        {% else %}
+
+                                        <button class="btn btn-danger btn-sm btn-labeled" id="{{post.post.id}}" type="button" data-toggle="modal" onclick="unblockPost(this.id)" data-target="#UnblockPost">
+                                        <span class="btn-label">
+                                           <span class="icon fa fa-ban icon-fw icon-lg f-16"></span>
+                                        </span>
+                                        Block
+                                    </button>
+                                        {% endif %}
+
+                                            <button class="btn btn-info btn-sm btn-labeled" id="{{post.id}}" onclick="window.location='report_detail/{{post.post.id}}/{{post_type}}'" type="button">
+                                            <span class="btn-label">
+                                            <span class="icon fa fa-eye icon-fw icon-lg f-16"></span>
+                                            </span>
+                                                 View
+                                             </button>
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+  {% include 'base/footer.html' %}
+
+
+
+   <div id="blockPost" tabindex="-1" role="dialog" class="modal fade">
+       <div class="modal-dialog modal-sm">
+       <div class="modal-content">
+           <div class="modal-body">
+           <div class="text-center">
+               <h4>Are you sure to Block this Post?</h4>
+               <div class="m-t-lg">
+               <button class="btn btn-danger" data-dismiss="modal" type="button">Cancel</button>
+               <button class="btn btn-success" postid=""  id="blockpost_id" data-dismiss="modal" onclick="blockPostFunction(this.id)" type="button" data-toggle="modal">Block</button>
+
+               </div>
+           </div>
+           </div>
+       </div>
+       </div>
+   </div>
+
+   <div id="UnblockPost" tabindex="-1" role="dialog" class="modal fade">
+       <div class="modal-dialog modal-sm">
+       <div class="modal-content">
+           <div class="modal-body">
+           <div class="text-center">
+               <h4>Are you sure to Unblock this Post?</h4>
+               <div class="m-t-lg">
+               <button class="btn btn-danger" data-dismiss="modal" type="button">Cancel</button>
+               <button class="btn btn-success" postid="" id="unblockpost_id" data-dismiss="modal" onclick="unblockPostFunction(this.id)" type="button" data-toggle="modal" >UnBlock</button>
+
+               </div>
+           </div>
+           </div>
+       </div>
+       </div>
+   </div>
+
+
+  <div id="showPostDetail" tabindex="-1" role="dialog" class="modal fade">
+       <div class="modal-dialog modal-sm">
+       <div class="modal-content">
+           <div class="modal-body">
+           <div class="text-center">
+               <h4>Are?</h4>
+               <div class="m-t-lg">
+               <button class="btn btn-danger" data-dismiss="modal" type="button">Cancel</button>
+               <button class="btn btn-success" postid="block[post_id" id="" data-dismiss="modal" onclick="blockPostFunction()" type="button" data-toggle="modal"></button>
+
+               </div>
+           </div>
+           </div>
+       </div>
+       </div>
+   </div>
+
+   <!-- Modal -->
+<div class="modal fade" id="Success">
+       <div class="modal-dialog modal-sm" data-dismiss="modal">
+           <div class="modal-content">
+               <div class="modal-body">
+                   <h4 id="message" class="text-center">Post has been Blocked Successfully</h4>
+                   <div class="successful-icon text-center">
+                    <button class="btn btn-success" onclick="window.location.reload();" type="button">OK</button>
+                    </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <!-- Modal END-->
+
+<script>
+
+    function unblockPost(clicked_id){
+      document.getElementById('unblockpost_id').setAttribute('postid',clicked_id)
+      console.log(clicked_id)
+    };
+
+    function blockPost(clicked_id){
+      document.getElementById('blockpost_id').setAttribute('postid',clicked_id)
+      console.log(clicked_id)
+    };
+
+
+
+    function blockPostFunction(){
+        var id  = document.getElementById('blockpost_id').getAttribute("postid");
+        var type = 2
+        $.ajax(
+    {
+        type:"POST",
+        url: "/api/admin_panel/block_post/"+id + "/"+ type + "/False",
+        headers: { "X-CSRFToken":"{{request.COOKIES.csrftoken}}" },
+      success: function( data )
+        {
+
+           $('#message').text(data.message)
+            $("#Success").modal('show')
+
+        },
+      statusCode: {
+        404: function(response) {
+            alert('404')
+        },
+        500: function(response) {
+            alert('500')
+        },
+        400: function(response) {
+            alert('400')
+        },
+    }
+     })
+  };
+
+      function unblockPostFunction(){
+        var id  = document.getElementById('unblockpost_id').getAttribute("postid");
+        var type = 2
+        $.ajax(
+    {
+        type:"POST",
+        url: "/api/admin_panel/block_post/"+id + "/"+ type + "/True",
+        headers: { "X-CSRFToken":"{{request.COOKIES.csrftoken}}" },
+      success: function( data )
+        {
+            $('#message').text(data.message)
+            $("#Success").modal('show')
+
+
+        },
+      statusCode: {
+        404: function(response) {
+            alert('404')
+        },
+        500: function(response) {
+            alert('500')
+        },
+        400: function(response) {
+            alert('400')
+        },
+    }
+     })
+  };
+
+$('#sort_by_category').val("{{sort_by_category}}");
+$('#sort_by_project').val("{{sort_by_project}}");
+
+$('#filter_date').change(function() {
+
+    if ($('#startdate').val() != '' && $('#enddate').val() != '' ){
+      $('#filter-post').prop('disabled', false);
+      }
+      else{
+        $('#filter-post').prop('disabled', true);
+      }
+
+})
+
+
+$('#startdate').val("{{start_date}}");
+$('#enddate').val("{{end_date}}");
+if ("{{start_date}}" && "{{end_date}}"){
+    $('#filter-post').prop('disabled', false);
+    $('#enddate').datepicker('setStartDate', "{{start_date}}");
+     $('#startdate').datepicker('setEndDate', "{{end_date}}");
+
+}
+</script>

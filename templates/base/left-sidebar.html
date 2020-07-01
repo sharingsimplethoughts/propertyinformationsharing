@@ -1,0 +1,65 @@
+{% load staticfiles %}
+<div class="layout-sidebar">
+  <div class="layout-sidebar-backdrop"></div>
+  <div class="layout-sidebar-body">
+    <div class="custom-scrollbar">
+      <nav id="sidenav" class="sidenav-collapse collapse">
+        <ul class="sidenav">
+          <li class="sidenav-heading">Navigation</li>
+          <li class="sidenav-item dashboardPageNav">
+            <a href="dashboard.php" aria-haspopup="true">
+              <span class="sidenav-icon icon icon-home"></span>
+              <span class="sidenav-label">Dashboard</span>
+            </a>
+          </li>
+         <li class="sidenav-item accountPageNav">
+              <a href="accounts.php" aria-haspopup="true">
+                <span class="sidenav-icon icon icon-users"></span>
+                <span class="sidenav-label">Account Management</span>
+              </a>
+          </li>
+          <li class="sidenav-item has-subnav postNav">
+              <a aria-haspopup="true" aria-expanded="true">
+                <span class="sidenav-icon icon fa fa-trophy"></span>
+                <span class="sidenav-label">Post Management</span>
+              </a>
+              <ul class="sidenav-subnav collapse" aria-expanded="true">
+                <li class="accNav-a"><a href="post-management.php">Today</a></li>
+                <li class="accNav-b"><a href="post-week.php">This Week</a></li>
+                <li class="accNav-b"><a href="post-month.php">This Month</a></li>
+              </ul>
+          </li>
+          <li class="sidenav-item tagPageNav">
+              <a href="tag-management.php" aria-haspopup="true">
+                <span class="sidenav-icon icon icon-th"></span>
+                <span class="sidenav-label">Tag Management</span>
+              </a>
+          </li>
+          <li class="sidenav-item has-subnav flagNav">
+              <a aria-haspopup="true" aria-expanded="true">
+                <span class="sidenav-icon icon fa fa-flag"></span>
+                <span class="sidenav-label">Flag Management</span>
+              </a>
+              <ul class="sidenav-subnav collapse" aria-expanded="true">
+                <li class="accNav-a"><a href="flag-post.php">Post</a></li>
+                <li class="accNav-b"><a href="flag-profile.php">Profile</a></li>
+                <li class="accNav-b"><a href="flag-all">All</a></li>
+              </ul>
+          </li>
+          <li class="sidenav-item reportPageNav">
+              <a href="report-generation.php" aria-haspopup="true">
+                <span class="sidenav-icon fa fa-flag"></span>
+                <span class="sidenav-label">Report Generation</span>
+              </a>
+          </li>
+          <li class="sidenav-item paymentPageNav">
+              <a href="payments.php" aria-haspopup="true">
+                <span class="sidenav-icon fa fa-money"></span>
+                <span class="sidenav-label">Payment</span>
+              </a>
+          </li>
+      </ul>
+      </nav>
+    </div>
+  </div>
+</div>

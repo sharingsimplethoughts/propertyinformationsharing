@@ -1,0 +1,211 @@
+{% include 'base/header.html' %}
+
+
+<style>
+
+
+</style>
+
+  <div class="accountPage">
+    <div class="layout-content">
+            <div class="layout-content-body">
+                    <div class="row margin-bottom-15">
+                        <div class="col-md-6">
+                            <div class="title-bar">
+                                <h1 class="title-bar-title">
+                                    <span class="d-ib">View Post</span>
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="category-select">
+                                <button class="btn btn-primary" onclick="window.location='/admin_panel/post_management'">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row gutter-xs">
+                    <div class="col-xs-10">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Project Name</label>
+                                                <input type="text" class="form-control"  value="{{post.name}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Project Type</label>
+                                                <input type="text" class="form-control"  value="{{post.project_type.type}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Created By (Username)</label>
+                                                <input type="text" class="form-control"  value="{{post.created_by.username}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Crteated date</label>
+                                                <input type="text" class="form-control"  value="{{post.created_on|date:"d M Y"}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Project Category</label>
+                                                <input type="text" class="form-control" value="{{post.project_category.category}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Year</label>
+                                                <input type="text" class="form-control" value="{{post.year}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Start Date</label>
+                                                <input type="text" class="form-control" value="{{post.t_type_start_date|date:"d M Y"}}" placeholder="" readonly="" >
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>End Date</label>
+                                                <input type="text" class="form-control" value="{{post.t_type_end_date|date:"d M Y"}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Tags</label>
+                                            {% if post.tags.all %}
+                                                <div class="tag-username">
+                                                    {% for tag in post.tags.all %}
+                                                    <span>{{tag.tag}}</span>
+                                                    {% endfor %}
+                                                </div>
+
+                                            {% else %}
+                                                <input type="text"  class="form-control" readonly>
+
+                                                {% endif %}
+
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <textarea class="form-control" placeholder="" rows="3" readonly="">{{post.about_post}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row  margin-bottom-15">
+                                        
+                                        {% for image in post_imgs %}
+                                      <div class="col-md-2">
+
+                                          <img src="{{image.image.url}}" class="img-responsive">
+                                          <div class="img-text">
+                                               <p class="text-center">{{image.image_tag |default_if_none:""}}</p>
+                                          </div>
+
+                                      </div>
+                                        {% endfor %}
+
+                                    </div>
+
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Post Status</label>
+                                                {% if post.is_active %}
+                                                <input  type ="text" style ="color:green;font-weight:500" value="Active" readonly class="form-control">
+                                                {% else %}
+                                                <input  type="text" style ="color:red;font-weight:500" value="Inactive" readonly class="form-control" >
+
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Taged Users <span class="text-danger">(@)</span></label>
+
+                                                {% if post.taged_users.all %}
+                                                    <div class="tag-username">
+                                                    {% for user in post.taged_users.all %}
+                                                    <span><a href="#">{{user.username}}</a></span>
+                                                    {% endfor %}
+                                                </div>
+                                                {% else %}
+                                                <input type="text" class="form-control" readonly>
+                                                {% endif %}
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Address <i class="fa fa-home text-danger"></i></label>
+                                                <input type="text" class="form-control" value="{{post.street}} {{post.city}} {{post.country}} {{post.zip_code}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+
+                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Location(Lat, lon) <i class="fa fa-map-marker text-danger"></i></label>
+                                                <input type="text" class="form-control" value="{{post.lat}}, {{post.lon}}" placeholder="" readonly="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row  margin-bottom-15">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><i class="fa fa-thumbs-up text-danger" style="font-size: 20px;"></i></label>
+                                                <label>{{post.total_likes}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><i class="fa fa-comments-o text-danger" style="font-size: 20px;"></i></label>
+                                                <label>{{post.total_comments}}</label>
+                                            </div>
+                                        </div>
+                                         <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><i class="fa fa-flag text-danger" style="font-size: 20px;"></i></label>
+                                                <label>{{post.total_reported}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+  {% include 'base/footer.html' %}
+
